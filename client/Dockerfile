@@ -4,6 +4,8 @@ WORKDIR /app
 COPY . ./
 RUN npm install
 RUN npm run build
+EXPOSE 8080
+RUN npm run start
 # Copy package.json and package-lock.json before other files
 # Utilise Docker cache to save re-installing dependencies if unchanged
 # COPY ./package*.json ./
@@ -25,7 +27,7 @@ COPY --from=next-build /app/.next /usr/share/nginx/html
 
 ENV PORT 8080
 ENV HOST 0.0.0.0
-EXPOSE 3000 8080
+EXPOSE 8080
 CMD sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
 # Run container as non-root (unprivileged) user
