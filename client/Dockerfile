@@ -27,7 +27,7 @@ COPY --from=next-build /app/.next /usr/share/nginx/html
 ENV PORT 8080
 ENV HOST 0.0.0.0
 EXPOSE 8080
-CMD npm run start && sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+CMD sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;' && npm run start"
 
 # Run container as non-root (unprivileged) user
 # The node user is provided in the Node.js Alpine base image
