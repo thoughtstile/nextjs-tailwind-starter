@@ -1,27 +1,27 @@
-# Base on offical Node.js Slim image
-FROM node:14-slim as react-build
-
-# Set working directory
-WORKDIR /usr/app
-
+# build environment
+FROM node:14-slim as next-build
+WORKDIR /app
+COPY . ./
+RUN npm install
+RUN num build
 # Copy package.json and package-lock.json before other files
 # Utilise Docker cache to save re-installing dependencies if unchanged
-COPY ./package*.json ./
+# COPY ./package*.json ./
 
 # Install dependencies
-RUN npm install --production
+# RUN npm install --production
 
 # Copy all files
-COPY ./ ./
+# COPY ./ ./
 
 # Build app
-RUN npm run build
+# RUN npm run build
 
 # server environment
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/configfile.template
 
-COPY --from=react-build /app/.next /usr/share/nginx/html
+COPY --from=next-build /app/.next /usr/share/nginx/html
 
 ENV PORT 8080
 ENV HOST 0.0.0.0
