@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . ./
 RUN npm install
 RUN npm run build
-EXPOSE 8080
+EXPOSE 3000
 # Copy package.json and package-lock.json before other files
 # Utilise Docker cache to save re-installing dependencies if unchanged
 # COPY ./package*.json ./
