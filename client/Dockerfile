@@ -1,5 +1,5 @@
 # build environment
-FROM node:14-slim as react-build
+FROM node:14-slim
 WORKDIR /app
 COPY . ./
 RUN npm install
